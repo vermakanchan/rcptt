@@ -8,13 +8,12 @@ Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.core;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.verifications.text;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.swt,
+ org.eclipse.rap.rwt,
  org.eclipse.rcptt.core.ecl.core;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.ecl.impl;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.swt;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.verifications;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.jface,
- org.eclipse.jface.text,
+ org.eclipse.rap.jface, 
  org.eclipse.rcptt.tesla.recording.aspects.jface.text;bundle-version="[2.1.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

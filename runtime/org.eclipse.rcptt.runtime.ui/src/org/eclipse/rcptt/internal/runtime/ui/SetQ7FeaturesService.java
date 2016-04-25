@@ -15,15 +15,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.bindings.keys.formatting.KeyFormatterFactory;
+import org.eclipse.rcptt.core.Q7Features;
+import org.eclipse.rcptt.core.ecl.core.model.SetQ7Features;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
-
-import org.eclipse.rcptt.core.Q7Features;
-import org.eclipse.rcptt.core.ecl.core.model.SetQ7Features;
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
 import org.eclipse.rcptt.tesla.core.TeslaVariables;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.ui.Q7KeyFormatter;
 
 public class SetQ7FeaturesService implements ICommandService {
@@ -50,10 +48,10 @@ public class SetQ7FeaturesService implements ICommandService {
 			int pos = feature.indexOf('=');
 			String key = feature.substring(0, pos);
 			String value = feature.substring(pos + 1);
-			if (key.equals(TeslaFeatures.STATUS_DIALOG_ALLOWED)) {
-				TeslaEventManager.getManager().setStatusDialogModeAllowed(
-						Boolean.valueOf(value));
-			}
+			// if (key.equals(TeslaFeatures.STATUS_DIALOG_ALLOWED)) {
+//				TeslaEventManager.getManager().setStatusDialogModeAllowed(
+//						Boolean.valueOf(value));
+			// }
 		}
 	}
 

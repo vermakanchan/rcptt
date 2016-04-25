@@ -15,10 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.widgets.Item;
-import org.eclipse.swt.widgets.Widget;
-
+import org.eclipse.rcptt.tesla.core.ui.Image;
+import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.util.swt.ImageUtil;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.rcptt.verifications.tree.Cell;
@@ -28,9 +27,9 @@ import org.eclipse.rcptt.verifications.tree.Row;
 import org.eclipse.rcptt.verifications.tree.Tree;
 import org.eclipse.rcptt.verifications.tree.TreeFactory;
 import org.eclipse.rcptt.verifications.tree.TreeVerificationUtils;
-import org.eclipse.rcptt.tesla.core.ui.Image;
-import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
+//import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Widget;
 
 public class TreeVerificationModeller {
 
@@ -99,14 +98,14 @@ public class TreeVerificationModeller {
 		ItemData cellData = TreeFactory.eINSTANCE.createItemData();
 		Image image = SWTModelMapper.mapImage(TableTreeUtil.getImage(item, index));
 		List<StyleRangeEntry> styleRanges = new ArrayList<StyleRangeEntry>();
-		StyleRange[] ranges = TableTreeUtil.getStyleRanges(item, index);
-
-		if (ranges != null) {
-			for (StyleRange styleRange : ranges) {
-				styleRanges.add(SWTModelMapper.makeStyleRangeEntry(styleRange));
-			}
-			cell.getStyle().addAll(styleRanges);
-		}
+		// StyleRange[] ranges = TableTreeUtil.getStyleRanges(item, index);
+		//
+		// if (ranges != null) {
+		// for (StyleRange styleRange : ranges) {
+		// styleRanges.add(SWTModelMapper.makeStyleRangeEntry(styleRange));
+		// }
+		// cell.getStyle().addAll(styleRanges);
+		// }
 		cellData.setText(TableTreeUtil.getValue(item, index));
 		cellData.setBackgroundColor(SWTModelMapper.makeColor(TableTreeUtil.getBackground(item, index)));
 		cellData.setForegroundColor(SWTModelMapper.makeColor(TableTreeUtil.getForeground(item, index)));

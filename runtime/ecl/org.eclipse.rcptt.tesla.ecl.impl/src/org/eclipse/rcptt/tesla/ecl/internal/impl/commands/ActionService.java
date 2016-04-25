@@ -395,23 +395,23 @@ public class ActionService extends AbstractActionService {
 			traverseType = SWT.TRAVERSE_TAB_NEXT;
 		else if (Key.equals("TRAVERSE_TAB_PREVIOUS"))
 			traverseType = SWT.TRAVERSE_TAB_PREVIOUS;
-		else if (Key.equals("TRAVERSE_ARROW_NEXT"))
-			traverseType = SWT.TRAVERSE_ARROW_NEXT;
-		else if (Key.equals("TRAVERSE_ARROW_PREVIOUS"))
-			traverseType = SWT.TRAVERSE_ARROW_PREVIOUS;
-		else if (Key.equals("TRAVERSE_MNEMONIC")) {
-			traverseType = SWT.TRAVERSE_MNEMONIC;
-			String charStr = kt.getChar();
-			try {
-				ch = charStr == null ? 0 : stringToChar(charStr);
-			} catch (ParseException e1) {
-				throw new CoreException(
-						TeslaImplPlugin.err("Illegal character"));
-			}
-		} else if (Key.equals("TRAVERSE_PAGE_NEXT"))
-			traverseType = SWT.TRAVERSE_PAGE_NEXT;
-		else if (Key.equals("TRAVERSE_PAGE_PREVIOUS"))
-			traverseType = SWT.TRAVERSE_PAGE_PREVIOUS;
+		// else if (Key.equals("TRAVERSE_ARROW_NEXT"))
+		// traverseType = SWT.TRAVERSE_ARROW_NEXT;
+		// else if (Key.equals("TRAVERSE_ARROW_PREVIOUS"))
+		// traverseType = SWT.TRAVERSE_ARROW_PREVIOUS;
+		// else if (Key.equals("TRAVERSE_MNEMONIC")) {
+		// traverseType = SWT.TRAVERSE_MNEMONIC;
+		// String charStr = kt.getChar();
+		// try {
+		// ch = charStr == null ? 0 : stringToChar(charStr);
+		// } catch (ParseException e1) {
+		// throw new CoreException(
+		// TeslaImplPlugin.err("Illegal character"));
+		// }
+		// } else if (Key.equals("TRAVERSE_PAGE_NEXT"))
+		// traverseType = SWT.TRAVERSE_PAGE_NEXT;
+		// else if (Key.equals("TRAVERSE_PAGE_PREVIOUS"))
+		// traverseType = SWT.TRAVERSE_PAGE_PREVIOUS;
 
 		if (traverseType != null) {
 			ControlUIElement controlUIElement = getControlUIElement(kt

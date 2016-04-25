@@ -28,7 +28,6 @@ import org.eclipse.rcptt.ecl.runtime.ISession;
 import org.eclipse.rcptt.reporting.core.ReportHelper;
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
-import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.core.protocol.ControlUIElement;
@@ -48,9 +47,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
-import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.rcptt.util.Base64;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
@@ -59,7 +55,7 @@ import org.eclipse.ui.PlatformUI;
 public class TeslaBridge {
 	private static TeslaQPlayer player;
 	private static TeslaQClient client;
-	private static ITeslaEventListener listener;
+	// private static ITeslaEventListener listener;
 	private static AdvancedInformation lastInfo;
 
 	public synchronized static void setup() {
@@ -91,27 +87,27 @@ public class TeslaBridge {
 				client.notifyUI();
 			};
 		};
-		if (listener != null) {
-			TeslaEventManager.getManager().removeEventListener(listener);
-		}
-		listener = new ITeslaEventListener() {
-			public boolean doProcessing(Context context) {
-				Q7WaitInfoRoot info = getCurrentWaitInfo(true);
-				TeslaQClient clientTemp = client;
-				if (clientTemp != null && clientTemp.processNext(context, info)) {
-					return true;
-				}
-				return false;
-			}
-
-			public void hasEvent(HasEventKind kind, String run) {
-				if (client != null) {
-					Q7WaitInfoRoot info = getCurrentWaitInfo(false);
-					client.hasEvent(kind.name(), run, info);
-				}
-			}
-		};
-		TeslaEventManager.getManager().addEventListener(listener);
+		// if (listener != null) {
+		// TeslaEventManager.getManager().removeEventListener(listener);
+		// }
+		// listener = new ITeslaEventListener() {
+		// public boolean doProcessing(Context context) {
+		// Q7WaitInfoRoot info = getCurrentWaitInfo(true);
+		// TeslaQClient clientTemp = client;
+		// if (clientTemp != null && clientTemp.processNext(context, info)) {
+		// return true;
+		// }
+		// return false;
+		// }
+		//
+		// public void hasEvent(HasEventKind kind, String run) {
+		// if (client != null) {
+		// Q7WaitInfoRoot info = getCurrentWaitInfo(false);
+		// client.hasEvent(kind.name(), run, info);
+		// }
+		// }
+		// };
+		// TeslaEventManager.getManager().addEventListener(listener);
 	}
 
 	public static Q7WaitInfoRoot getCurrentWaitInfo(final boolean tick) {
@@ -145,12 +141,12 @@ public class TeslaBridge {
 		if (client != null) {
 			client.shutdown();
 		}
-		if (listener != null) {
-			TeslaEventManager.getManager().removeEventListener(listener);
-		}
+		// if (listener != null) {
+		// TeslaEventManager.getManager().removeEventListener(listener);
+		// }
 		player = null;
 		client = null;
-		listener = null;
+		// listener = null;
 		eclipseWindow = null;
 		lastControlUIElement = null;
 	}

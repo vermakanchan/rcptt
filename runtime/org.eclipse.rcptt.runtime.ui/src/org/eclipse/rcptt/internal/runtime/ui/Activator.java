@@ -10,16 +10,11 @@
  *******************************************************************************/
 package org.eclipse.rcptt.internal.runtime.ui;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.rcptt.core.launching.events.AutEventLocation;
-import org.eclipse.rcptt.core.launching.events.EventsFactory;
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.runtime.ui.AutEventManager;
 import org.eclipse.rcptt.runtime.ui.Q7Monitor;
-import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager;
-import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager.IUIIDEListener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -55,20 +50,20 @@ public class Activator extends AbstractUIPlugin {
 		if (AutEventManager.getQ7EclPort() != -1) {
 			new Q7Monitor().start();
 			sendInitialState();
-			UIIDEManager.addListener(new IUIIDEListener() {
-				public void handleNewWorkspaceLocation(String path) {
-					AutEventLocation location = EventsFactory.eINSTANCE
-							.createAutEventLocation();
-					location.setLocation(path);
-					try {
-						AutEventManager.getInstance().sendEvent(location);
-					} catch (CoreException e) {
-						log(e.getMessage(), e);
-					} catch (InterruptedException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			});
+			// UIIDEManager.addListener(new IUIIDEListener() {
+			// public void handleNewWorkspaceLocation(String path) {
+			// AutEventLocation location = EventsFactory.eINSTANCE
+			// .createAutEventLocation();
+			// location.setLocation(path);
+			// try {
+			// AutEventManager.getInstance().sendEvent(location);
+			// } catch (CoreException e) {
+			// log(e.getMessage(), e);
+			// } catch (InterruptedException e) {
+			// throw new RuntimeException(e);
+			// }
+			// }
+			// });
 		}
 		ReportManager.reload();
 	}

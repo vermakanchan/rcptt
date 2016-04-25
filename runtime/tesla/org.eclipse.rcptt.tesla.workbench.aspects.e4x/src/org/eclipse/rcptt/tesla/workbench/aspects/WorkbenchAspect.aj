@@ -14,7 +14,6 @@ import org.eclipse.ui.statushandlers.WorkbenchStatusDialogManager;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 
 public aspect WorkbenchAspect {
 	public WorkbenchAspect() {
@@ -26,11 +25,11 @@ public aspect WorkbenchAspect {
 			boolean modal):
 		execution(void org.eclipse.ui.statushandlers.WorkbenchStatusDialogManager.addStatusAdapter(StatusAdapter, boolean))
 		&& target(mgr) && args(adapter, modal) {
-		if (!TeslaEventManager.getManager().hasListeners()) {
-			return proceed(mgr, adapter, modal);
-		} else if (TeslaEventManager.getManager().isStatusDialogModeAllowed()) {
-			return proceed(mgr, adapter, modal);
-		}
+//		if (!TeslaEventManager.getManager().hasListeners()) {
+//			return proceed(mgr, adapter, modal);
+//		} else if (TeslaEventManager.getManager().isStatusDialogModeAllowed()) {
+//			return proceed(mgr, adapter, modal);
+//		}
 
 		return null;
 	}

@@ -10,10 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.workbench.texteditor;
 
-import static org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor.failResponse;
-import static org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor.okResponse;
-import static java.lang.Integer.parseInt;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,17 +27,7 @@ import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.IVerticalRulerColumn;
 import org.eclipse.jface.text.source.OverviewRuler;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.rcptt.util.swt.Events;
-import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
 import org.eclipse.rcptt.tesla.core.Q7WaitUtils;
-import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.core.protocol.ClickText;
@@ -82,6 +68,14 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.jface.text.JFaceTextManager;
 import org.eclipse.rcptt.tesla.jface.text.JFaceTextProcessor;
+import org.eclipse.rcptt.util.swt.Events;
+import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Widget;
 
 public class WorkbenchTexteditorProcessor implements ITeslaCommandProcessor,
 		ISWTModelMapperExtension {

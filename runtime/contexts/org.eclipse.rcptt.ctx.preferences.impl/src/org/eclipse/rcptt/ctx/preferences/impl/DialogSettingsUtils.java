@@ -29,15 +29,13 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.osgi.framework.Bundle;
-
 import org.eclipse.rcptt.internal.preferences.PrefUtils;
 import org.eclipse.rcptt.preferences.ListPrefData;
 import org.eclipse.rcptt.preferences.PrefData;
 import org.eclipse.rcptt.preferences.PrefNode;
 import org.eclipse.rcptt.preferences.PreferencesFactory;
 import org.eclipse.rcptt.preferences.StringPrefData;
-import org.eclipse.rcptt.runtime.ui.preferences.DialogSettingsManager;
+import org.osgi.framework.Bundle;
 
 @SuppressWarnings("restriction")
 public final class DialogSettingsUtils {
@@ -58,10 +56,10 @@ public final class DialogSettingsUtils {
 				applyDialogSettings(settings, node);
 			}
 
-			if (bundle.getState() != Bundle.ACTIVE
-					|| DialogSettingsManager.getInstance().getSettings(bundle) == null) {
-				saveDialogSettings(bundle, settings);
-			}
+			// if (bundle.getState() != Bundle.ACTIVE
+			// || DialogSettingsManager.getInstance().getSettings(bundle) == null) {
+			// saveDialogSettings(bundle, settings);
+			// }
 		}
 	}
 
@@ -113,13 +111,13 @@ public final class DialogSettingsUtils {
 			throws IOException {
 		IDialogSettings settings = null;
 
-		if (Bundle.ACTIVE == bundle.getState()) {
-			IDialogSettings dialogSettings = DialogSettingsManager
-					.getInstance().getSettings(bundle);
-			if (dialogSettings != null) {
-				settings = dialogSettings;
-			}
-		}
+		// if (Bundle.ACTIVE == bundle.getState()) {
+		// IDialogSettings dialogSettings = DialogSettingsManager
+		// .getInstance().getSettings(bundle);
+		// if (dialogSettings != null) {
+		// settings = dialogSettings;
+		// }
+		// }
 
 		if (settings == null) {
 			settings = loadDialogSettings(bundle);
@@ -298,13 +296,13 @@ public final class DialogSettingsUtils {
 	public static void clearDialogSettings(Bundle bundle) {
 		try {
 			IDialogSettings settings = null;
-			if (Bundle.ACTIVE == bundle.getState()) {
-				IDialogSettings dialogSettings = DialogSettingsManager
-						.getInstance().getSettings(bundle);
-				if (dialogSettings != null) {
-					settings = dialogSettings;
-				}
-			}
+			// if (Bundle.ACTIVE == bundle.getState()) {
+			// IDialogSettings dialogSettings = DialogSettingsManager
+			// .getInstance().getSettings(bundle);
+			// if (dialogSettings != null) {
+			// settings = dialogSettings;
+			// }
+			// }
 
 			if (settings != null && settings instanceof DialogSettings) {
 				setDialogSettingsFieldTo(settings, "items");

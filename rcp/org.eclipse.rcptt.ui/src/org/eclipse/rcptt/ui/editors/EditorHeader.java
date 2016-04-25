@@ -74,7 +74,6 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.internal.forms.widgets.FormImages;
 
 @SuppressWarnings("restriction")
 public abstract class EditorHeader {
@@ -155,13 +154,13 @@ public abstract class EditorHeader {
 		Color top = toolkit.getColors().getColor(IFormColors.H_GRADIENT_END);
 		Color bot = toolkit.getColors().getColor(IFormColors.H_GRADIENT_START);
 
-		Image gradientImage = FormImages.getInstance().getGradient(
-				new Color[] { top, bot }, new int[] { 100 }, height, true,
-				toolkit.getColors().getColor(IFormColors.TB_BG),
-				composite.getDisplay());
-		// No need to dispose the gradient image cause it's created and stored
-		// in resource manager
-		composite.setBackgroundImage(gradientImage);
+		// Image gradientImage = FormImages.getInstance().getGradient(
+		// new Color[] { top, bot }, new int[] { 100 }, height, true,
+		// toolkit.getColors().getColor(IFormColors.TB_BG),
+		// composite.getDisplay());
+		// // No need to dispose the gradient image cause it's created and stored
+		// // in resource manager
+		// composite.setBackgroundImage(gradientImage);
 
 		Composite c1 = toolkit.createComposite(parent);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 1).span(4, 1)

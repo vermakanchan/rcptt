@@ -10,16 +10,9 @@
  *******************************************************************************/
 package org.eclipse.rcptt.verifications.text.impl;
 
-import java.util.List;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.text.TextViewer;
-import org.eclipse.jface.text.reconciler.AbstractReconciler;
-import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.rcptt.core.VerificationProcessor;
 import org.eclipse.rcptt.core.scenario.Verification;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
@@ -28,12 +21,9 @@ import org.eclipse.rcptt.tesla.core.ui.TextPosition;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
-import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.recording.aspects.jface.text.JFaceTextEventManager;
 import org.eclipse.rcptt.verifications.runtime.ErrorList;
 import org.eclipse.rcptt.verifications.text.TextFactory;
 import org.eclipse.rcptt.verifications.text.TextVerification;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Widget;
 
 public class TextVerificationProcessor extends VerificationProcessor {
@@ -55,8 +45,8 @@ public class TextVerificationProcessor extends VerificationProcessor {
 				if (expectedText == null)
 					expectedText = "";
 
-				if (widget instanceof StyledText)
-					unfold((StyledText) widget);
+				// if (widget instanceof StyledText)
+				// unfold((StyledText) widget);
 				String actualText = PlayerTextUtils.getTextForVerification(swtuiElement);
 				if (actualText == null)
 					actualText = "";
@@ -68,40 +58,40 @@ public class TextVerificationProcessor extends VerificationProcessor {
 
 				EList<StyleRangeEntry> expectedStyleEntries = textVerification.getStyles();
 				if (expectedStyleEntries.size() > 0 && !textVerification.isIgnoreStyling()) {
-					if (!(widget instanceof StyledText))
+					// if (!(widget instanceof StyledText))
 						errors.add("Expected StyledText widget, got %s.",
 								widget.getClass().getName());
-					else {
-						StyledText styledText = (StyledText) widget;
-						List<StyleRangeEntry> actualStyleEntries = PlayerTextUtils.captureStyleRanges(styledText);
-
-						boolean failed = false;
-						for (int i = 0; i < Math.min(expectedStyleEntries.size(), actualStyleEntries.size()); ++i) {
-							StyleRangeEntry expected = expectedStyleEntries.get(i);
-							StyleRangeEntry actual = actualStyleEntries.get(i);
-
-							if (!EcoreUtil.equals(expected, actual)) {
-								errors.add(
-										"Difference in text styling found at %s.",
-										posToString(earliestPos(expected.getStartPos(), actual.getStartPos())));
-								failed = true;
-								break;
-							}
-						}
-
-						if (!failed && expectedStyleEntries.size() != actualStyleEntries.size()) {
-							if (actualStyleEntries.size() > expectedStyleEntries.size())
-								// actual text contains more style ranges
-								errors.add("Difference in text styling found at %s.",
-										posToString(actualStyleEntries.get(expectedStyleEntries.size()).getStartPos()));
-							else
-								// expected text contains more style ranges
-								errors.add(
-										"Difference in text styling found at %s.",
-										posToString(actualStyleEntries.get(actualStyleEntries.size() - 1).getStartPos()));
-
-						}
-					}
+					// else {
+					// StyledText styledText = (StyledText) widget;
+					// List<StyleRangeEntry> actualStyleEntries = PlayerTextUtils.captureStyleRanges(styledText);
+					//
+					// boolean failed = false;
+					// for (int i = 0; i < Math.min(expectedStyleEntries.size(), actualStyleEntries.size()); ++i) {
+					// StyleRangeEntry expected = expectedStyleEntries.get(i);
+					// StyleRangeEntry actual = actualStyleEntries.get(i);
+					//
+					// if (!EcoreUtil.equals(expected, actual)) {
+					// errors.add(
+					// "Difference in text styling found at %s.",
+					// posToString(earliestPos(expected.getStartPos(), actual.getStartPos())));
+					// failed = true;
+					// break;
+					// }
+					// }
+					//
+					// if (!failed && expectedStyleEntries.size() != actualStyleEntries.size()) {
+					// if (actualStyleEntries.size() > expectedStyleEntries.size())
+					// // actual text contains more style ranges
+					// errors.add("Difference in text styling found at %s.",
+					// posToString(actualStyleEntries.get(expectedStyleEntries.size()).getStartPos()));
+					// else
+					// // expected text contains more style ranges
+					// errors.add(
+					// "Difference in text styling found at %s.",
+					// posToString(actualStyleEntries.get(actualStyleEntries.size() - 1).getStartPos()));
+					//
+					// }
+					// }
 				}
 			}
 		});
@@ -125,13 +115,13 @@ public class TextVerificationProcessor extends VerificationProcessor {
 				result.setSelector(p.getSelector());
 				result.setText(PlayerTextUtils.getTextForVerification(swtuiElement));
 
-				if (widget instanceof StyledText) {
-					StyledText styledText = (StyledText) widget;
-					if (unfold(styledText))
-						result.setText(PlayerTextUtils.getTextForVerification(swtuiElement));
-					result.getStyles().addAll(PlayerTextUtils.captureStyleRanges(styledText));
-					result.setIgnoreStyling(result.getStyles().size() > 0 ? p.isIgnoreStyling() : true);
-				} else
+				// if (widget instanceof StyledText) {
+				// StyledText styledText = (StyledText) widget;
+				// if (unfold(styledText))
+				// result.setText(PlayerTextUtils.getTextForVerification(swtuiElement));
+				// result.getStyles().addAll(PlayerTextUtils.captureStyleRanges(styledText));
+				// result.setIgnoreStyling(result.getStyles().size() > 0 ? p.isIgnoreStyling() : true);
+				// } else
 					result.setIgnoreStyling(true);
 			}
 		});
@@ -139,27 +129,27 @@ public class TextVerificationProcessor extends VerificationProcessor {
 		return result;
 	}
 
-	private static boolean unfold(StyledText styledText) {
-		TextViewer viewer = JFaceTextEventManager.getViewer(styledText);
-		if (viewer != null && viewer instanceof SourceViewer) {
-			viewer.doOperation(ProjectionViewer.EXPAND_ALL);
-			AbstractReconciler reconciler =
-					TeslaSWTAccess.getField(AbstractReconciler.class,
-							viewer, "fReconciler");
-			if (reconciler != null) {
-				TeslaSWTAccess.call(reconciler, "forceReconciling");
-
-				Object thread = TeslaSWTAccess.getField(Object.class,
-						reconciler, "fThread");
-				if (thread != null)
-					TeslaSWTAccess.call(thread, "suspendCallerWhileDirty");
-			}
-
-			return true;
-		}
-
-		return false;
-	}
+	// private static boolean unfold(StyledText styledText) {
+	// TextViewer viewer = JFaceTextEventManager.getViewer(styledText);
+	// if (viewer != null && viewer instanceof SourceViewer) {
+	// viewer.doOperation(ProjectionViewer.EXPAND_ALL);
+	// AbstractReconciler reconciler =
+	// TeslaSWTAccess.getField(AbstractReconciler.class,
+	// viewer, "fReconciler");
+	// if (reconciler != null) {
+	// TeslaSWTAccess.call(reconciler, "forceReconciling");
+	//
+	// Object thread = TeslaSWTAccess.getField(Object.class,
+	// reconciler, "fThread");
+	// if (thread != null)
+	// TeslaSWTAccess.call(thread, "suspendCallerWhileDirty");
+	// }
+	//
+	// return true;
+	// }
+	//
+	// return false;
+	// }
 
 	private static TextPosition earliestPos(TextPosition a, TextPosition b) {
 		if (a.getLine() < b.getLine())

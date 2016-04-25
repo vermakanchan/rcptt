@@ -27,7 +27,7 @@ public class RestartAutService implements ICommandService {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				PlatformUI.getWorkbench().restart();
+				// PlatformUI.getWorkbench().restart();
 			}
 		});
 		return Status.OK_STATUS;

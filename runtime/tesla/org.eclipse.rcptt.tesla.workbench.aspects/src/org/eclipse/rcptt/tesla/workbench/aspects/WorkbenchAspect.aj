@@ -36,11 +36,11 @@ public aspect WorkbenchAspect {
 			boolean modal):
 		execution(void org.eclipse.ui.statushandlers.WorkbenchStatusDialogManager.addStatusAdapter(StatusAdapter, boolean))
 		&& target(mgr) && args(adapter, modal) {
-		if (!TeslaEventManager.getManager().hasListeners()) {
-			return proceed(mgr, adapter, modal);
-		} else if (TeslaEventManager.getManager().isStatusDialogModeAllowed()) {
-			return proceed(mgr, adapter, modal);
-		}
+//		if (!TeslaEventManager.getManager().hasListeners()) {
+//			return proceed(mgr, adapter, modal);
+//		} else if (TeslaEventManager.getManager().isStatusDialogModeAllowed()) {
+//			return proceed(mgr, adapter, modal);
+//		}
 
 		return null;
 	}

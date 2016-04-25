@@ -6,11 +6,11 @@ Bundle-Version: 2.1.0.qualifier
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.aspectj.runtime;visibility:=reexport,
  org.eclipse.core.runtime,
- org.eclipse.jface,
+ org.eclipse.rap.jface,
  org.eclipse.rcptt.tesla.swt.aspects;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.core.am;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.core.context;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.jface.text,
+ org.eclipse.rap.jface.text,
  org.eclipse.rcptt.util;bundle-version="[2.1.0,3.0.0)"
 Import-Package: org.osgi.framework
 Eclipse-SupplementBundle: org.eclipse.jface.text

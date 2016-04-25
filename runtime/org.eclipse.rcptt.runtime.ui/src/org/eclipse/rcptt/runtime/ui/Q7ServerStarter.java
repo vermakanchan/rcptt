@@ -17,11 +17,9 @@ import org.eclipse.rcptt.ecl.client.tcp.EclTcpSession;
 import org.eclipse.rcptt.ecl.debug.runtime.SuspendListener;
 import org.eclipse.rcptt.ecl.debug.runtime.SuspendManager;
 import org.eclipse.rcptt.ecl.server.tcp.EclTcpServerManager;
-
 import org.eclipse.rcptt.internal.runtime.ui.Activator;
-import org.eclipse.rcptt.util.NetworkUtils;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.util.NetworkUtils;
 
 public enum Q7ServerStarter {
 
@@ -131,11 +129,11 @@ public enum Q7ServerStarter {
 		SuspendManager.INSTANCE.addListener(new SuspendListener() {
 
 			public void suspend() {
-				TeslaEventManager.getManager().setUnfreeze(true);
+				// TeslaEventManager.getManager().setUnfreeze(true);
 			}
 
 			public void resume() {
-				TeslaEventManager.getManager().setUnfreeze(false);
+				// TeslaEventManager.getManager().setUnfreeze(false);
 			}
 		});
 	}

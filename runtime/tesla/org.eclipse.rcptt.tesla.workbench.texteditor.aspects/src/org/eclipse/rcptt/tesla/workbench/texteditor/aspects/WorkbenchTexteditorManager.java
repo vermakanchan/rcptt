@@ -10,18 +10,15 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.workbench.texteditor.aspects;
 
-import java.util.WeakHashMap;
-
-import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 public final class WorkbenchTexteditorManager {
 	private WorkbenchTexteditorManager() {
 	}
 
-	private static WeakHashMap<ISourceViewer, AbstractTextEditor> editorsMap = new WeakHashMap<ISourceViewer, AbstractTextEditor>();
-
-	public static void mapEditor(ISourceViewer viewer, AbstractTextEditor editor) {
-		editorsMap.put(viewer, editor);
-	}
+	// private static WeakHashMap<ISourceViewer, AbstractTextEditor> editorsMap = new WeakHashMap<ISourceViewer,
+	// AbstractTextEditor>();
+	//
+	// public static void mapEditor(ISourceViewer viewer, AbstractTextEditor editor) {
+	// editorsMap.put(viewer, editor);
+	// }
 }

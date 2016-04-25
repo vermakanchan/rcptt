@@ -107,10 +107,10 @@ public class CanvasProcessor implements ITeslaCommandProcessor {
 					e.type = SWT.MouseExit;
 					events.sendEvent(element, e);
 					break;
-				case HOVER:
-					e.type = SWT.MouseHover;
-					events.sendEvent(element, e);
-					break;
+				// case HOVER:
+				// e.type = SWT.MouseHover;
+				// events.sendEvent(element, e);
+				// break;
 				case UP:
 					e.type = SWT.MouseUp;
 					events.sendEvent(element, e);

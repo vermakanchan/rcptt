@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.util.swt;
 
-import org.eclipse.swt.internal.win32.OS;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.rcptt.util.swt.ShellUtils;
 
 @SuppressWarnings("restriction")
 public class ShellUtilsImpl implements ShellUtils {
@@ -23,36 +21,36 @@ public class ShellUtilsImpl implements ShellUtils {
 	//https://bugs.eclipse.org/bugs/show_bug.cgi?id=192036#c4
 	@Override
 	public void forceActive(Shell shell) {
-	    long hFrom = OS.GetForegroundWindow();
-
-	    if (hFrom <= 0) {
-	      OS.SetForegroundWindow(shell.handle);
-	      return;
-	    }
-
-	    if (shell.handle == hFrom) {
-	      return;
-	    }
-
-	    int pid = OS.GetWindowThreadProcessId(hFrom, null);
-	    int _threadid = OS.GetWindowThreadProcessId(shell.handle, null);
-
-	    if (_threadid == pid) {
-	      OS.SetForegroundWindow(shell.handle);
-	      return;
-	    }
-
-	    if (pid > 0) {
-	      if ( !OS.AttachThreadInput(_threadid, pid, true)) {
-	        return;
-	      }
-	      OS.SetForegroundWindow(shell.handle);
-	      OS.AttachThreadInput(_threadid, pid, false);
-	    }
-
-	    OS.BringWindowToTop(shell.handle);
-	    OS.UpdateWindow(shell.handle);
-	    OS.SetActiveWindow(shell.handle);
+		// long hFrom = OS.GetForegroundWindow();
+		//
+		// if (hFrom <= 0) {
+		// OS.SetForegroundWindow(shell.handle);
+		// return;
+		// }
+		//
+		// if (shell.handle == hFrom) {
+		// return;
+		// }
+		//
+		// int pid = OS.GetWindowThreadProcessId(hFrom, null);
+		// int _threadid = OS.GetWindowThreadProcessId(shell.handle, null);
+		//
+		// if (_threadid == pid) {
+		// OS.SetForegroundWindow(shell.handle);
+		// return;
+		// }
+		//
+		// if (pid > 0) {
+		// if ( !OS.AttachThreadInput(_threadid, pid, true)) {
+		// return;
+		// }
+		// OS.SetForegroundWindow(shell.handle);
+		// OS.AttachThreadInput(_threadid, pid, false);
+		// }
+		//
+		// OS.BringWindowToTop(shell.handle);
+		// OS.UpdateWindow(shell.handle);
+		// OS.SetActiveWindow(shell.handle);
 	  }
 	
 }

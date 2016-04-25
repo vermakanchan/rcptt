@@ -44,16 +44,13 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.EditPartViewer.Conditional;
-import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.GraphicalViewer;
-import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.Tool;
@@ -67,23 +64,7 @@ import org.eclipse.gef.tools.CreationTool;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.parts.GraphicalEditor;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.TypedListener;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartReference;
-
-import org.eclipse.rcptt.util.Function;
-import org.eclipse.rcptt.util.ListUtil;
-import org.eclipse.rcptt.util.Predicate;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
@@ -145,6 +126,19 @@ import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.processors.IModelMapperHelper;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.util.Function;
+import org.eclipse.rcptt.util.ListUtil;
+import org.eclipse.rcptt.util.Predicate;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TypedListener;
+import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 
 public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper {
 	private final EClass[] commandsSupported = {
@@ -169,7 +163,8 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 
 	private AbstractTeslaClient client;
 
-	private final Map<Widget, DirectEditorContainer> openedDirectEdits = new HashMap<Widget, DirectEditorContainer>();
+	// private final Map<Widget, DirectEditorContainer> openedDirectEdits = new HashMap<Widget,
+	// DirectEditorContainer>();
 	private String id;
 	private final Set<EditPart> dragParts = new HashSet<EditPart>();
 
@@ -897,10 +892,10 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 					e.type = SWT.MouseMove;
 					getPlayer().getEvents().sendEvent(canvas, e);
 					break;
-				case HOVER:
-					e.type = SWT.MouseHover;
-					getPlayer().getEvents().sendEvent(canvas, e);
-					break;
+				// case HOVER:
+				// e.type = SWT.MouseHover;
+				// getPlayer().getEvents().sendEvent(canvas, e);
+				// break;
 				case DOUBLE_CLICK:
 					e.type = SWT.MouseDoubleClick;
 					getPlayer().getEvents().sendEvent(canvas, e);
@@ -1550,124 +1545,124 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 	}
 
 	private Response handleCommitDirectEdit(CommitDirectEdit command) {
-		// SWTUI
-		SWTUIElement element = SWTElementMapper.getMapper(id).get(
-				command.getElement());
-		DirectEditorContainer[] editors = TeslaDirectEditManager.getInstance()
-				.getEditors();
-		if (element != null) {
-			if (element instanceof DiagramViewerUIElement) {
-				// Deactive all direct edits
-				for (final DirectEditorContainer container : editors) {
-					CellEditor editor = container.getCellEditor();
-					if (editor != null) {
-						TeslaDirectEditManager.getInstance().forceRemove(
-								container.getManager());
-						if (container.getCellEditor().getControl() != null) {
-							getPlayer().exec("Commit direct edit",
-									new Runnable() {
-
-										public void run() {
-											container.commit();
-										}
-									});
-						}
-					}
-				}
-				return RawFactory.eINSTANCE.createResponse();
-			} else {
-				for (final DirectEditorContainer container : editors) {
-					CellEditor editor = container.getCellEditor();
-					if (editor != null) {
-						Control control = editor.getControl();
-						if (control.equals(element.widget)) {
-							TeslaDirectEditManager.getInstance().forceRemove(
-									container.getManager());
-							getPlayer().exec("Commit direct edit",
-									new Runnable() {
-
-										public void run() {
-											container.commit();
-										}
-									});
-							return RawFactory.eINSTANCE.createResponse();
-						}
-					}
-				}
-			}
-		} else {
-			// Deactive all direct edits
-			for (DirectEditorContainer container : editors) {
-				CellEditor editor = container.getCellEditor();
-				if (editor != null) {
-					TeslaDirectEditManager.getInstance().forceRemove(
-							container.getManager());
-					container.commit();
-				}
-			}
-			return RawFactory.eINSTANCE.createResponse();
-		}
+		// // SWTUI
+		// SWTUIElement element = SWTElementMapper.getMapper(id).get(
+		// command.getElement());
+		// DirectEditorContainer[] editors = TeslaDirectEditManager.getInstance()
+		// .getEditors();
+		// if (element != null) {
+		// if (element instanceof DiagramViewerUIElement) {
+		// // Deactive all direct edits
+		// for (final DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// TeslaDirectEditManager.getInstance().forceRemove(
+		// container.getManager());
+		// if (container.getCellEditor().getControl() != null) {
+		// getPlayer().exec("Commit direct edit",
+		// new Runnable() {
+		//
+		// public void run() {
+		// container.commit();
+		// }
+		// });
+		// }
+		// }
+		// }
+		// return RawFactory.eINSTANCE.createResponse();
+		// } else {
+		// for (final DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// Control control = editor.getControl();
+		// if (control.equals(element.widget)) {
+		// TeslaDirectEditManager.getInstance().forceRemove(
+		// container.getManager());
+		// getPlayer().exec("Commit direct edit",
+		// new Runnable() {
+		//
+		// public void run() {
+		// container.commit();
+		// }
+		// });
+		// return RawFactory.eINSTANCE.createResponse();
+		// }
+		// }
+		// }
+		// }
+		// } else {
+		// // Deactive all direct edits
+		// for (DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// TeslaDirectEditManager.getInstance().forceRemove(
+		// container.getManager());
+		// container.commit();
+		// }
+		// }
+		// return RawFactory.eINSTANCE.createResponse();
+		// }
 		return null;
 	}
 
 	private Response handleCancelDirectEdit(CancelDirectEdit command) {
-		// SWTUI
-		SWTUIElement element = SWTElementMapper.getMapper(id).get(
-				command.getElement());
-		DirectEditorContainer[] editors = TeslaDirectEditManager.getInstance()
-				.getEditors();
-		if (element != null) {
-			if (element instanceof DiagramViewerUIElement) {
-				// Deactive all direct edits
-				for (final DirectEditorContainer container : editors) {
-					CellEditor editor = container.getCellEditor();
-					if (editor != null) {
-						TeslaDirectEditManager.getInstance().forceRemove(
-								container.getManager());
-						if (container.getCellEditor().getControl() != null) {
-							getPlayer().exec("Cancel direct edit",
-									new Runnable() {
-
-										public void run() {
-											container.bringDown();
-										}
-									});
-						}
-					}
-				}
-				return RawFactory.eINSTANCE.createResponse();
-			} else {
-				for (final DirectEditorContainer container : editors) {
-					CellEditor editor = container.getCellEditor();
-					if (editor != null) {
-						Control control = editor.getControl();
-						if (control.equals(element.widget)) {
-							TeslaDirectEditManager.getInstance().forceRemove(
-									container.getManager());
-							getPlayer().exec("Cancel direct edit",
-									new Runnable() {
-
-										public void run() {
-											container.bringDown();
-										}
-									});
-							return RawFactory.eINSTANCE.createResponse();
-						}
-					}
-				}
-			}
-		} else {
-			// Deactive all direct edits
-			for (DirectEditorContainer container : editors) {
-				CellEditor editor = container.getCellEditor();
-				if (editor != null) {
-					TeslaDirectEditManager.getInstance().forceRemove(
-							container.getManager());
-					container.bringDown();
-				}
-			}
-			return RawFactory.eINSTANCE.createResponse();
-		}
+		// // SWTUI
+		// SWTUIElement element = SWTElementMapper.getMapper(id).get(
+		// command.getElement());
+		// DirectEditorContainer[] editors = TeslaDirectEditManager.getInstance()
+		// .getEditors();
+		// if (element != null) {
+		// if (element instanceof DiagramViewerUIElement) {
+		// // Deactive all direct edits
+		// for (final DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// TeslaDirectEditManager.getInstance().forceRemove(
+		// container.getManager());
+		// if (container.getCellEditor().getControl() != null) {
+		// getPlayer().exec("Cancel direct edit",
+		// new Runnable() {
+		//
+		// public void run() {
+		// container.bringDown();
+		// }
+		// });
+		// }
+		// }
+		// }
+		// return RawFactory.eINSTANCE.createResponse();
+		// } else {
+		// for (final DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// Control control = editor.getControl();
+		// if (control.equals(element.widget)) {
+		// TeslaDirectEditManager.getInstance().forceRemove(
+		// container.getManager());
+		// getPlayer().exec("Cancel direct edit",
+		// new Runnable() {
+		//
+		// public void run() {
+		// container.bringDown();
+		// }
+		// });
+		// return RawFactory.eINSTANCE.createResponse();
+		// }
+		// }
+		// }
+		// }
+		// } else {
+		// // Deactive all direct edits
+		// for (DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// TeslaDirectEditManager.getInstance().forceRemove(
+		// container.getManager());
+		// container.bringDown();
+		// }
+		// }
+		// return RawFactory.eINSTANCE.createResponse();
+		// }
 		return null;
 	}
 
@@ -1711,97 +1706,98 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 	private SelectResponse performDirectEdit(
 			final IElementProcessorMapper mapper, final Canvas canvas,
 			final EditPart part) {
-		EditPolicy policy = part.getEditPolicy(EditPolicy.DIRECT_EDIT_ROLE);
-		DirectEditorContainer[] editorContainers = TeslaDirectEditManager
-				.getInstance().getEditors();
-		boolean activeDE = false;
-		Object partModel = part.getModel();
-		for (DirectEditorContainer directEditorContainer : editorContainers) {
-			CellEditor cellEditor = directEditorContainer.getCellEditor();
-			if ((cellEditor != null && cellEditor.getControl() != null && cellEditor
-					.getControl().isDisposed()) || cellEditor == null) {
-				continue;
-			}
-
-			DirectEditManager manager = directEditorContainer.getManager();
-			EditPart sourcePart = getSourceEditPart(manager);
-			Object model = sourcePart != null ? sourcePart.getModel() : null;
-			if (sourcePart != null
-					&& sourcePart.getParent().equals(part.getParent())) {
-				Object model2 = sourcePart.getParent().getModel();
-				Object model3 = part.getParent().getModel();
-				if (model2 != null && model2.equals(model3)) {
-					activeDE = true;
-					break;
-				}
-			}
-			if (sourcePart != null
-					&& sourcePart.equals(part)
-					|| (model != null && partModel != null
-							&& model instanceof EObject
-							&& partModel instanceof EObject && EcoreUtil
-								.equals((EObject) model, (EObject) partModel))) {
-				activeDE = true;
-				break;
-			} else {
-				if (cellEditor.getControl().getParent().equals(canvas)) {
-					directEditorContainer.bringDown();
-				}
-			}
-		}
-		if (policy != null) {
-			final GefProcessor This = this;
-			if (!activeDE) {
-				getPlayer().exec("Perform direct edit", new Runnable() {
-
-					public void run() {
-						// Just force request
-						Request request = new Request(
-								RequestConstants.REQ_DIRECT_EDIT);
-						part.performRequest(request);
-						DirectEditorContainer[] editors = TeslaDirectEditManager
-								.getInstance().getEditors();
-						for (DirectEditorContainer container : editors) {
-							CellEditor editor = container.getCellEditor();
-							if (editor != null && editor.getControl() != null) {
-								Control control = editor.getControl();
-								if (!control.isDisposed()
-										&& control.getParent().equals(canvas)) {
-									TeslaDirectEditManager.getInstance()
-											.forceEdit(container.getManager());
-									Element element = SWTElementMapper
-											.getMapper(id).get(
-													getPlayer().wrap(control));
-									mapper.map(element, This);
-									mapper.map(element, client
-											.getProcessor(SWTUIProcessor.class));
-									// SelectResponse response =
-									// ProtocolFactory.eINSTANCE
-									// .createSelectResponse();
-									// response.getElements().add(element);
-									// return response;
-								}
-							}
-						}
-					}
-				});
-			}
-		} else {
-			if (!activeDE) {
-				getPlayer().exec("Perform direct edit", new Runnable() {
-
-					public void run() {
-						// Just force request
-						Request request = new Request(
-								RequestConstants.REQ_DIRECT_EDIT);
-						part.performRequest(request);
-					}
-				});
-			}
-		}
-		SelectResponse response = ProtocolFactory.eINSTANCE
-				.createSelectResponse();
-		return response;
+		// EditPolicy policy = part.getEditPolicy(EditPolicy.DIRECT_EDIT_ROLE);
+		// DirectEditorContainer[] editorContainers = TeslaDirectEditManager
+		// .getInstance().getEditors();
+		// boolean activeDE = false;
+		// Object partModel = part.getModel();
+		// for (DirectEditorContainer directEditorContainer : editorContainers) {
+		// CellEditor cellEditor = directEditorContainer.getCellEditor();
+		// if ((cellEditor != null && cellEditor.getControl() != null && cellEditor
+		// .getControl().isDisposed()) || cellEditor == null) {
+		// continue;
+		// }
+		//
+		// DirectEditManager manager = directEditorContainer.getManager();
+		// EditPart sourcePart = getSourceEditPart(manager);
+		// Object model = sourcePart != null ? sourcePart.getModel() : null;
+		// if (sourcePart != null
+		// && sourcePart.getParent().equals(part.getParent())) {
+		// Object model2 = sourcePart.getParent().getModel();
+		// Object model3 = part.getParent().getModel();
+		// if (model2 != null && model2.equals(model3)) {
+		// activeDE = true;
+		// break;
+		// }
+		// }
+		// if (sourcePart != null
+		// && sourcePart.equals(part)
+		// || (model != null && partModel != null
+		// && model instanceof EObject
+		// && partModel instanceof EObject && EcoreUtil
+		// .equals((EObject) model, (EObject) partModel))) {
+		// activeDE = true;
+		// break;
+		// } else {
+		// if (cellEditor.getControl().getParent().equals(canvas)) {
+		// directEditorContainer.bringDown();
+		// }
+		// }
+		// }
+		// if (policy != null) {
+		// final GefProcessor This = this;
+		// if (!activeDE) {
+		// getPlayer().exec("Perform direct edit", new Runnable() {
+		//
+		// public void run() {
+		// // Just force request
+		// Request request = new Request(
+		// RequestConstants.REQ_DIRECT_EDIT);
+		// part.performRequest(request);
+		// DirectEditorContainer[] editors = TeslaDirectEditManager
+		// .getInstance().getEditors();
+		// for (DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null && editor.getControl() != null) {
+		// Control control = editor.getControl();
+		// if (!control.isDisposed()
+		// && control.getParent().equals(canvas)) {
+		// TeslaDirectEditManager.getInstance()
+		// .forceEdit(container.getManager());
+		// Element element = SWTElementMapper
+		// .getMapper(id).get(
+		// getPlayer().wrap(control));
+		// mapper.map(element, This);
+		// mapper.map(element, client
+		// .getProcessor(SWTUIProcessor.class));
+		// // SelectResponse response =
+		// // ProtocolFactory.eINSTANCE
+		// // .createSelectResponse();
+		// // response.getElements().add(element);
+		// // return response;
+		// }
+		// }
+		// }
+		// }
+		// });
+		// }
+		// } else {
+		// if (!activeDE) {
+		// getPlayer().exec("Perform direct edit", new Runnable() {
+		//
+		// public void run() {
+		// // Just force request
+		// Request request = new Request(
+		// RequestConstants.REQ_DIRECT_EDIT);
+		// part.performRequest(request);
+		// }
+		// });
+		// }
+		// }
+		// SelectResponse response = ProtocolFactory.eINSTANCE
+		// .createSelectResponse();
+		// return response;
+		return null;
 	}
 
 	private EditPart getSourceEditPart(DirectEditManager manager) {
@@ -1984,25 +1980,25 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 			response.getFigure().add(fig);
 		}
 		viewer.getViewer().deselectAll();
-		getPlayer().exec("Hide direct editors", new Runnable() {
-
-			public void run() {
-				DirectEditorContainer[] editors = TeslaDirectEditManager
-						.getInstance().getEditors();
-				for (DirectEditorContainer container : editors) {
-					CellEditor editor = container.getCellEditor();
-					if (editor != null) {
-						Control control = editor.getControl();
-						if (control != null
-								&& control.getParent().equals(
-										viewer.getCanvas())) {
-							// System.out.println("!");
-							container.bringDown();
-						}
-					}
-				}
-			}
-		});
+		// getPlayer().exec("Hide direct editors", new Runnable() {
+		//
+		// public void run() {
+		// DirectEditorContainer[] editors = TeslaDirectEditManager
+		// .getInstance().getEditors();
+		// for (DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// Control control = editor.getControl();
+		// if (control != null
+		// && control.getParent().equals(
+		// viewer.getCanvas())) {
+		// // System.out.println("!");
+		// container.bringDown();
+		// }
+		// }
+		// }
+		// }
+		// });
 		return response;
 	}
 
@@ -2083,25 +2079,25 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 			response.getFigure().add(fig);
 		}
 		viewer.getViewer().deselectAll();
-		getPlayer().exec("Hide direct editors", new Runnable() {
-
-			public void run() {
-				DirectEditorContainer[] editors = TeslaDirectEditManager
-						.getInstance().getEditors();
-				for (DirectEditorContainer container : editors) {
-					CellEditor editor = container.getCellEditor();
-					if (editor != null) {
-						Control control = editor.getControl();
-						if (control != null
-								&& control.getParent().equals(
-										viewer.getCanvas())) {
-							// System.out.println("!");
-							container.bringDown();
-						}
-					}
-				}
-			}
-		});
+		// getPlayer().exec("Hide direct editors", new Runnable() {
+		//
+		// public void run() {
+		// DirectEditorContainer[] editors = TeslaDirectEditManager
+		// .getInstance().getEditors();
+		// for (DirectEditorContainer container : editors) {
+		// CellEditor editor = container.getCellEditor();
+		// if (editor != null) {
+		// Control control = editor.getControl();
+		// if (control != null
+		// && control.getParent().equals(
+		// viewer.getCanvas())) {
+		// // System.out.println("!");
+		// container.bringDown();
+		// }
+		// }
+		// }
+		// }
+		// });
 		return response;
 	}
 
@@ -2907,10 +2903,10 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 	public void clean() {
 		getMapper().clear();
 		getRawMapper().clear();
-		openedDirectEdits.clear();
+		// openedDirectEdits.clear();
 		dragParts.clear();
-		AutoExpandLevels.clear();
-		TeslaDirectEditManager.getInstance().clean();
+		// AutoExpandLevels.clear();
+		// TeslaDirectEditManager.getInstance().clean();
 	}
 
 	public FigureElementMapper getMapper() {
@@ -2926,7 +2922,7 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 		RawFigureElementMapper.remove(getFeatureID());
 		client = null;
 		dragParts.clear();
-		openedDirectEdits.clear();
+		// openedDirectEdits.clear();
 	}
 
 	private void scrollToPosition(final FigureCanvas canvas, int targetX,

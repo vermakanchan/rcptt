@@ -12,12 +12,6 @@ package org.eclipse.rcptt.expandbar.runtime.internal;
 
 import static org.eclipse.rcptt.expandbar.runtime.internal.ExpandBarUIProcessor.mapWidget;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Widget;
-
 import org.eclipse.rcptt.tesla.core.protocol.ItemUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
@@ -31,6 +25,11 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Widget;
 
 public class ExpandBarRecordingProcessor implements IRecordingProcessor, IBasicSWTEventListener,
 		ISWTModelMapperExtension {
